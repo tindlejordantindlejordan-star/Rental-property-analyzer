@@ -246,6 +246,6 @@ alert("Logged in");
 }function upgrade(){
 
 window.location.href =
-"https://YOUR-STRIPE-CHECKOUT-LINK";
+"https://buy.stripe.com/fZu7sE0M50v1cFb1OmfMA00";
 
 }
