@@ -5,7 +5,77 @@ const SUPABASE_KEY = "YOUR_ANON_KEY";
 const supabaseClient = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
-);function analyze(){
+async function signup(){
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+
+const {error} =
+await supabaseClient.auth.signUp({
+email,
+password
+});
+
+
+if(error){
+
+alert(error.message);
+
+}
+else{
+
+alert("Account created! Check your email if confirmation is enabled.");
+
+}
+
+}
+
+
+
+async function login(){
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+
+const {error} =
+await supabaseClient.auth.signInWithPassword({
+email,
+password
+});
+
+
+if(error){
+
+alert(error.message);
+
+}
+else{
+
+alert("Logged in!");
+
+window.location.href="dashboard.html";
+
+}
+
+}
+
+
+
+async function logout(){
+
+await supabaseClient.auth.signOut();
+
+window.location.href="index.html";
+
+});function analyze(){
 
 let price = Number(document.getElementById("price").value);
 let down = Number(document.getElementById("down").value);
