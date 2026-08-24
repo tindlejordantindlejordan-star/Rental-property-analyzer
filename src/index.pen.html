@@ -1,0 +1,101 @@
+<div class="container">
+<h1>Rental Property Analyzer</h1>
+<p>Analyze your rental deal before buying.</p>
+
+<div class="grid">
+<label>Purchase Price
+<input id="price" value="200000">
+</label>
+
+<label>Down Payment
+<input id="down" value="40000">
+</label>
+
+<label>Monthly Rent
+<input id="rent" value="1800">
+</label>
+
+<label>Monthly Expenses
+<input id="expenses" value="500">
+</label>
+
+<label>Mortgage Payment
+<input id="mortgage" value="900">
+</label>
+
+<label>Closing Costs
+<input id="closing" value="5000">
+</label>
+</div>
+
+<button onclick="analyze()">Analyze Property</button>
+
+<div id="result">
+Enter your numbers above.
+</div>
+</div><h2>BRRRR Calculator</h2>
+
+<div class="calculator">
+
+<label>Purchase Price</label>
+<input id="purchasePrice" type="number" placeholder="100000">
+
+<label>Down Payment (%)</label>
+<input id="downPaymentPercent" type="number" placeholder="20">
+
+<label>Rehab Cost</label>
+<input id="rehabCost" type="number" placeholder="30000">
+
+<label>Closing Costs</label>
+<input id="closingCosts" type="number" placeholder="3000">
+
+<label>Holding Costs</label>
+<input id="holdingCosts" type="number" placeholder="5000">
+
+<label>After Repair Value (ARV)</label>
+<input id="arv" type="number" placeholder="180000">
+
+<label>Refinance LTV (%)</label>
+<input id="refiLTV" type="number" placeholder="75">
+
+<label>Current Loan Balance</label>
+<input id="loanBalance" type="number" placeholder="80000">
+
+<label>Monthly Rental Income</label>
+<input id="monthlyRent" type="number" placeholder="1500">
+
+<label>Monthly Expenses</label>
+<input id="monthlyExpenses" type="number" placeholder="700">
+
+<button onclick="calculateBRRRR()">Analyze BRRRR Deal</button>
+
+
+<h3>Results</h3>
+
+<p>Total Cash Invested:
+<span id="cashInvested">$0</span></p>
+
+<p>Refinance Loan:
+<span id="refiLoan">$0</span></p>
+
+<p>Cash Returned:
+<span id="cashReturned">$0</span></p>
+
+<p>Cash Left In Deal:
+<span id="cashLeft">$0</span></p>
+
+<p>Monthly Cash Flow:
+<span id="cashFlow">$0</span></p>
+
+<p>Cash On Cash Return:
+<span id="cashOnCash">0%</span></p>
+
+<p>BRRRR Rating:
+<span id="brrrrScore"></span></p>
+
+</div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><input id="propertyName" 
+placeholder="Property Name">
+
+<button onclick="saveDeal()">
+Save Deal
+</button>
