@@ -1,76 +1,110 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f7fb;
-    margin: 0;
-    color: #222;
+font-family: Arial, sans-serif;
+margin:0;
+background:#f8fafc;
+color:#111827;
 }
 
 
-header {
-    background: #111827;
-    color: white;
-    padding: 40px;
-    text-align: center;
+.hero {
+background:#0f172a;
+color:white;
+padding:40px 8%;
 }
 
 
-h1 {
-    font-size: 42px;
-    margin-bottom: 10px;
+nav {
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 30px;
+.hero-content {
+max-width:700px;
+padding:80px 0;
 }
 
 
-.calculator {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+.hero h1 {
+font-size:48px;
+line-height:1.1;
 }
 
 
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0 18px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-size: 16px;
+.hero p {
+font-size:20px;
+color:#cbd5e1;
 }
 
 
 button {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 14px 25px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
+background:#22c55e;
+color:white;
+border:none;
+padding:14px 25px;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+margin:5px;
 }
 
 
-button:hover {
-    background:#1d4ed8;
+.secondary {
+background:white;
+color:#111827;
 }
 
 
-.results {
-    background:#eef2ff;
-    padding:20px;
-    border-radius:12px;
+
+.features {
+padding:70px 8%;
+text-align:center;
+}
+
+
+.cards {
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:25px;
+margin-top:40px;
 }
 
 
 .card {
-    background:white;
-    padding:20px;
-    border-radius:12px;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
 }
+
+
+.how {
+padding:70px 8%;
+background:#e2e8f0;
+text-align:center;
+}
+
+
+.steps {
+display:flex;
+justify-content:center;
+gap:50px;
+flex-wrap:wrap;
+}
+
+
+.steps div {
+background:white;
+padding:25px;
+border-radius:12px;
+}
+
+
+.cta {
+padding:70px 8%;
+text-align:center;
+background:#0f172a;
+color:white;
+}
+
