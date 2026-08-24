@@ -139,3 +139,34 @@ window.location.href="index.html";
 
 
 loadDashboard();
+async function loadProfile(){
+
+const {
+data:{
+user
+}
+}=await supabaseClient.auth.getUser();
+
+
+const {data:profile}=await supabaseClient
+.from("profiles")
+.select("*")
+.eq("id",user.id)
+.single();
+
+
+if(profile.is_pro){
+
+document.getElementById("userEmail").innerHTML +=
+"<br>⭐ Pro Member";
+
+}else{
+
+document.getElementById("userEmail").innerHTML +=
+"<br>Free Account";
+
+}
+
+}
+
+loadProfile();
