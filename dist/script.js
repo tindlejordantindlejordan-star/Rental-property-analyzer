@@ -237,8 +237,6 @@ password
 
 alert("Account created");
 
-}async function login(email,password){
-
 await supabaseClient.auth.signInWithPassword({
 email,
 password
@@ -373,6 +371,7 @@ doc.text(
 doc.save(
 "Rental-Analysis-Report.pdf"
 );
+    
 async function signup(){
 
     const email = document.getElementById("email").value;
