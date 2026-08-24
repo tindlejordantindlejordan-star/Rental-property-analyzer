@@ -1,11 +1,11 @@
 // ======================================================
 // RENTAL ANALYZER PRO
-// Main JavaScript
+// CLEAN MASTER SCRIPT
 // ======================================================
 
 
 // ======================================================
-// SUPABASE SETUP
+// SUPABASE
 // ======================================================
 
 const SUPABASE_URL =
@@ -22,28 +22,300 @@ const supabaseClient =
 
 
 // ======================================================
-// RENTAL PROPERTY CALCULATOR
+// GET CURRENT SESSION
+// ======================================================
+
+async function getCurrentSession() {
+
+    const {
+        data,
+        error
+    } = await supabaseClient.auth.getSession();
+
+    if (error) {
+        console.error("Session error:", error);
+        return null;
+    }
+
+    return data.session;
+}
+
+
+// ======================================================
+// UPDATE ACCOUNT STATUS
+// ======================================================
+
+async function updateUserStatus() {
+
+    const status =
+        document.getElementById("userStatus");
+
+    if (!status) return;
+
+
+    const session =
+        await getCurrentSession();
+
+
+    if (session) {
+
+        status.innerHTML =
+            "✅ Logged in as " +
+            session.user.email;
+
+    } else {
+
+        status.innerHTML =
+            "Not logged in";
+
+    }
+}
+
+
+// ======================================================
+// SIGN UP
+// ======================================================
+
+async function signup() {
+
+    const emailInput =
+        document.getElementById("email");
+
+    const passwordInput =
+        document.getElementById("password");
+
+
+    if (!emailInput || !passwordInput) {
+
+        alert(
+            "Email and password fields are missing."
+        );
+
+        return;
+    }
+
+
+    const email =
+        emailInput.value.trim();
+
+    const password =
+        passwordInput.value;
+
+
+    if (!email || !password) {
+
+        alert(
+            "Enter your email and password."
+        );
+
+        return;
+    }
+
+
+    if (password.length < 6) {
+
+        alert(
+            "Password must be at least 6 characters."
+        );
+
+        return;
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.signUp({
+            email: email,
+            password: password
+        });
+
+
+    if (error) {
+
+        console.error(
+            "Signup error:",
+            error
+        );
+
+        alert(error.message);
+
+        return;
+    }
+
+
+    console.log(
+        "Signup successful:",
+        data
+    );
+
+
+    if (data.session) {
+
+        alert(
+            "Account created and you're logged in!"
+        );
+
+        await updateUserStatus();
+
+    } else {
+
+        alert(
+            "Account created! Check your email to confirm your account before logging in."
+        );
+
+    }
+}
+
+
+// ======================================================
+// LOGIN
+// ======================================================
+
+async function login() {
+
+    const emailInput =
+        document.getElementById("email");
+
+    const passwordInput =
+        document.getElementById("password");
+
+
+    if (!emailInput || !passwordInput) {
+
+        alert(
+            "Email and password fields are missing."
+        );
+
+        return;
+    }
+
+
+    const email =
+        emailInput.value.trim();
+
+    const password =
+        passwordInput.value;
+
+
+    if (!email || !password) {
+
+        alert(
+            "Enter your email and password."
+        );
+
+        return;
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+
+    if (error) {
+
+        console.error(
+            "Login error:",
+            error
+        );
+
+        alert(error.message);
+
+        return;
+    }
+
+
+    console.log(
+        "Logged in:",
+        data.user.email
+    );
+
+
+    await updateUserStatus();
+
+
+    alert(
+        "✅ Login successful!"
+    );
+
+
+    window.location.href =
+        "dashboard.html";
+}
+
+
+// ======================================================
+// LOGOUT
+// ======================================================
+
+async function logout() {
+
+    const {
+        error
+    } =
+        await supabaseClient.auth.signOut();
+
+
+    if (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+        alert(error.message);
+
+        return;
+    }
+
+
+    window.location.href =
+        "index.html";
+}
+
+
+// ======================================================
+// RENTAL CALCULATOR
 // ======================================================
 
 function analyze() {
 
     const price =
-        Number(document.getElementById("price").value) || 0;
+        Number(
+            document.getElementById("price").value
+        ) || 0;
 
     const down =
-        Number(document.getElementById("down").value) || 0;
+        Number(
+            document.getElementById("down").value
+        ) || 0;
 
     const rent =
-        Number(document.getElementById("rent").value) || 0;
+        Number(
+            document.getElementById("rent").value
+        ) || 0;
 
     const expenses =
-        Number(document.getElementById("expenses").value) || 0;
+        Number(
+            document.getElementById("expenses").value
+        ) || 0;
 
     const mortgage =
-        Number(document.getElementById("mortgage").value) || 0;
+        Number(
+            document.getElementById("mortgage").value
+        ) || 0;
 
     const closing =
-        Number(document.getElementById("closing").value) || 0;
+        Number(
+            document.getElementById("closing").value
+        ) || 0;
 
 
     const cashFlow =
@@ -68,9 +340,6 @@ function analyze() {
 
     const result =
         document.getElementById("result");
-
-
-    if (!result) return;
 
 
     result.innerHTML = `
@@ -117,27 +386,37 @@ function calculateBRRRR() {
 
     const purchasePrice =
         Number(
-            document.getElementById("purchasePrice").value
+            document.getElementById(
+                "purchasePrice"
+            ).value
         ) || 0;
 
     const downPaymentPercent =
         Number(
-            document.getElementById("downPaymentPercent").value
+            document.getElementById(
+                "downPaymentPercent"
+            ).value
         ) || 0;
 
     const rehabCost =
         Number(
-            document.getElementById("rehabCost").value
+            document.getElementById(
+                "rehabCost"
+            ).value
         ) || 0;
 
     const closingCosts =
         Number(
-            document.getElementById("closingCosts").value
+            document.getElementById(
+                "closingCosts"
+            ).value
         ) || 0;
 
     const holdingCosts =
         Number(
-            document.getElementById("holdingCosts").value
+            document.getElementById(
+                "holdingCosts"
+            ).value
         ) || 0;
 
     const arv =
@@ -152,28 +431,30 @@ function calculateBRRRR() {
 
     const loanBalance =
         Number(
-            document.getElementById("loanBalance").value
+            document.getElementById(
+                "loanBalance"
+            ).value
         ) || 0;
 
     const rent =
         Number(
-            document.getElementById("monthlyRent").value
+            document.getElementById(
+                "monthlyRent"
+            ).value
         ) || 0;
 
     const expenses =
         Number(
-            document.getElementById("monthlyExpenses").value
+            document.getElementById(
+                "monthlyExpenses"
+            ).value
         ) || 0;
 
-
-    // Down payment
 
     const downPayment =
         purchasePrice *
         (downPaymentPercent / 100);
 
-
-    // Total cash invested
 
     const cashInvested =
         downPayment +
@@ -182,102 +463,73 @@ function calculateBRRRR() {
         holdingCosts;
 
 
-    // New refinance loan
-
     const refinanceLoan =
         arv *
         (refiLTV / 100);
 
-
-    // Cash returned from refinance
 
     const cashReturned =
         refinanceLoan -
         loanBalance;
 
 
-    // Cash remaining in deal
-
     const cashLeft =
         cashInvested -
         cashReturned;
 
-
-    // Monthly cash flow
 
     const monthlyCashFlow =
         rent -
         expenses;
 
 
-    // Cash-on-cash return
-
     const cashOnCash =
         cashLeft > 0
-            ? ((monthlyCashFlow * 12) / cashLeft) * 100
+            ? (
+                (monthlyCashFlow * 12) /
+                cashLeft
+            ) * 100
             : 0;
 
 
-    // Display results
-
-    const cashInvestedElement =
-        document.getElementById("cashInvested");
-
-    if (cashInvestedElement) {
-        cashInvestedElement.innerText =
-            "$" + cashInvested.toFixed(0);
-    }
+    document.getElementById(
+        "cashInvested"
+    ).innerText =
+        "$" + cashInvested.toFixed(0);
 
 
-    const refiLoanElement =
-        document.getElementById("refiLoan");
-
-    if (refiLoanElement) {
-        refiLoanElement.innerText =
-            "$" + refinanceLoan.toFixed(0);
-    }
+    document.getElementById(
+        "refiLoan"
+    ).innerText =
+        "$" + refinanceLoan.toFixed(0);
 
 
-    const cashReturnedElement =
-        document.getElementById("cashReturned");
-
-    if (cashReturnedElement) {
-        cashReturnedElement.innerText =
-            "$" + cashReturned.toFixed(0);
-    }
+    document.getElementById(
+        "cashReturned"
+    ).innerText =
+        "$" + cashReturned.toFixed(0);
 
 
-    const cashLeftElement =
-        document.getElementById("cashLeft");
-
-    if (cashLeftElement) {
-        cashLeftElement.innerText =
-            "$" + cashLeft.toFixed(0);
-    }
+    document.getElementById(
+        "cashLeft"
+    ).innerText =
+        "$" + cashLeft.toFixed(0);
 
 
-    const cashFlowElement =
-        document.getElementById("cashFlow");
-
-    if (cashFlowElement) {
-        cashFlowElement.innerText =
-            "$" +
-            monthlyCashFlow.toFixed(0) +
-            "/month";
-    }
+    document.getElementById(
+        "cashFlow"
+    ).innerText =
+        "$" +
+        monthlyCashFlow.toFixed(0) +
+        "/month";
 
 
-    const cashOnCashElement =
-        document.getElementById("cashOnCash");
+    document.getElementById(
+        "cashOnCash"
+    ).innerText =
+        cashOnCash.toFixed(1) +
+        "%";
 
-    if (cashOnCashElement) {
-        cashOnCashElement.innerText =
-            cashOnCash.toFixed(1) +
-            "%";
-    }
-
-
-    // Deal rating
 
     let rating;
 
@@ -290,16 +542,14 @@ function calculateBRRRR() {
         rating =
             "🔥 Excellent BRRRR Deal";
 
-    }
-    else if (
+    } else if (
         cashLeft <= 25000
     ) {
 
         rating =
             "✅ Good Deal";
 
-    }
-    else {
+    } else {
 
         rating =
             "⚠️ Needs Improvement";
@@ -307,233 +557,10 @@ function calculateBRRRR() {
     }
 
 
-    const scoreElement =
-        document.getElementById("brrrrScore");
-
-
-    if (scoreElement) {
-
-        scoreElement.innerText =
-            rating;
-
-    }
-}
-
-
-// ======================================================
-// SIGN UP
-// ======================================================
-
-async function signup() {
-
-    const emailElement =
-        document.getElementById("email");
-
-    const passwordElement =
-        document.getElementById("password");
-
-
-    if (!emailElement || !passwordElement) {
-
-        alert("Email and password fields are missing.");
-
-        return;
-    }
-
-
-    const email =
-        emailElement.value.trim();
-
-    const password =
-        passwordElement.value;
-
-
-    if (!email || !password) {
-
-        alert("Enter your email and password.");
-
-        return;
-    }
-
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient.auth.signUp({
-            email,
-            password
-        });
-
-
-    if (error) {
-
-        console.error(
-            "Signup error:",
-            error
-        );
-
-        alert(error.message);
-
-        return;
-    }
-
-
-    alert(
-        "Account created successfully!"
-    );
-}
-
-
-// ======================================================
-// LOGIN
-// ======================================================
-
-async function login() {
-
-    const emailElement =
-        document.getElementById("email");
-
-    const passwordElement =
-        document.getElementById("password");
-
-
-    if (!emailElement || !passwordElement) {
-
-        alert("Email and password fields are missing.");
-
-        return;
-    }
-
-
-    const email =
-        emailElement.value.trim();
-
-    const password =
-        passwordElement.value;
-
-
-    if (!email || !password) {
-
-        alert("Enter your email and password.");
-
-        return;
-    }
-
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-        });
-
-
-    if (error) {
-
-        console.error(
-            "Login error:",
-            error
-        );
-
-        alert(error.message);
-
-        return;
-    }
-
-
-    alert("Logged in successfully!");
-
-
-    window.location.href =
-        "dashboard.html";
-}
-
-
-// ======================================================
-// LOGOUT
-// ======================================================
-
-async function logout() {
-
-    const {
-        error
-    } =
-        await supabaseClient.auth.signOut();
-
-
-    if (error) {
-
-        console.error(
-            "Logout error:",
-            error
-        );
-
-        alert(error.message);
-
-        return;
-    }
-
-
-    window.location.href =
-        "index.html";
-}
-
-
-// ======================================================
-// CHECK LOGIN
-// ======================================================
-
-async function checkLogin() {
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient.auth.getSession();
-
-
-    if (error) {
-
-        console.error(
-            "Session error:",
-            error
-        );
-
-        return null;
-    }
-
-
-    if (!data.session) {
-
-        console.log(
-            "No active session."
-        );
-
-        return null;
-    }
-
-
-    console.log(
-        "Logged in as:",
-        data.session.user.email
-    );
-
-
-    return data.session;
-}
-
-
-// ======================================================
-// STRIPE UPGRADE
-// ======================================================
-
-function upgrade() {
-
-    window.location.href =
-        "https://buy.stripe.com/fZu7sE0M50v1cFb1OmfMA00";
+    document.getElementById(
+        "brrrrScore"
+    ).innerText =
+        rating;
 }
 
 
@@ -543,12 +570,8 @@ function upgrade() {
 
 async function checkProStatus() {
 
-    const {
-        data: {
-            session
-        }
-    } =
-        await supabaseClient.auth.getSession();
+    const session =
+        await getCurrentSession();
 
 
     if (!session) {
@@ -568,13 +591,13 @@ async function checkProStatus() {
                 "id",
                 session.user.id
             )
-            .single();
+            .maybeSingle();
 
 
     if (error) {
 
         console.error(
-            "Profile error:",
+            "Pro status error:",
             error
         );
 
@@ -582,8 +605,7 @@ async function checkProStatus() {
     }
 
 
-    return profile &&
-        profile.is_pro === true;
+    return profile?.is_pro === true;
 }
 
 
@@ -593,23 +615,8 @@ async function checkProStatus() {
 
 async function saveDeal() {
 
-    const {
-        data: {
-            session
-        },
-        error: sessionError
-    } =
-        await supabaseClient.auth.getSession();
-
-
-    if (sessionError) {
-
-        alert(
-            "Unable to check your login."
-        );
-
-        return;
-    }
+    const session =
+        await getCurrentSession();
 
 
     if (!session) {
@@ -622,8 +629,6 @@ async function saveDeal() {
     }
 
 
-    // Check Pro
-
     const isPro =
         await checkProStatus();
 
@@ -632,9 +637,9 @@ async function saveDeal() {
 
         const upgradeNow =
             confirm(
-                "Saving deals is a Pro feature.\n\n" +
+                "🔒 Saving deals is a Pro feature.\n\n" +
                 "Upgrade to Pro for $9/month.\n\n" +
-                "Upgrade now?"
+                "Would you like to upgrade?"
             );
 
 
@@ -648,26 +653,14 @@ async function saveDeal() {
     }
 
 
-    // Property name
-
-    const propertyNameElement =
+    const propertyNameInput =
         document.getElementById(
             "propertyName"
         );
 
 
-    if (!propertyNameElement) {
-
-        alert(
-            "Property name field is missing."
-        );
-
-        return;
-    }
-
-
     const propertyName =
-        propertyNameElement.value.trim();
+        propertyNameInput.value.trim();
 
 
     if (!propertyName) {
@@ -680,8 +673,6 @@ async function saveDeal() {
     }
 
 
-    // Deal data
-
     const deal = {
 
         user_id:
@@ -692,88 +683,57 @@ async function saveDeal() {
 
         purchase_price:
             Number(
-                document
-                    .getElementById(
-                        "purchasePrice"
-                    )
-                    .value
+                document.getElementById(
+                    "purchasePrice"
+                ).value
             ) || 0,
 
         rehab_cost:
             Number(
-                document
-                    .getElementById(
-                        "rehabCost"
-                    )
-                    .value
+                document.getElementById(
+                    "rehabCost"
+                ).value
             ) || 0,
 
         arv:
             Number(
-                document
-                    .getElementById(
-                        "arv"
-                    )
-                    .value
+                document.getElementById(
+                    "arv"
+                ).value
             ) || 0,
 
         cash_left:
             Number(
-                document
-                    .getElementById(
-                        "cashLeft"
-                    )
-                    .innerText
-                    .replace(
-                        /[$,]/g,
-                        ""
-                    )
+                document.getElementById(
+                    "cashLeft"
+                ).innerText
+                .replace(/[$,]/g, "")
             ) || 0,
 
         monthly_cash_flow:
             Number(
-                document
-                    .getElementById(
-                        "cashFlow"
-                    )
-                    .innerText
-                    .replace(
-                        /[$,\/month]/g,
-                        ""
-                    )
+                document.getElementById(
+                    "cashFlow"
+                ).innerText
+                .replace(/[$,\/month]/g, "")
             ) || 0,
 
         cash_on_cash:
             Number(
-                document
-                    .getElementById(
-                        "cashOnCash"
-                    )
-                    .innerText
-                    .replace(
-                        "%",
-                        ""
-                    )
+                document.getElementById(
+                    "cashOnCash"
+                ).innerText
+                .replace("%", "")
             ) || 0
-
     };
 
 
-    console.log(
-        "Saving deal:",
-        deal
-    );
-
-
     const {
-        data,
         error
     } =
         await supabaseClient
             .from("deals")
-            .insert([deal])
-            .select()
-            .single();
+            .insert([deal]);
 
 
     if (error) {
@@ -792,15 +752,20 @@ async function saveDeal() {
     }
 
 
-    console.log(
-        "Saved deal:",
-        data
-    );
-
-
     alert(
         "✅ Deal saved successfully!"
     );
+}
+
+
+// ======================================================
+// STRIPE UPGRADE
+// ======================================================
+
+function upgrade() {
+
+    window.location.href =
+        "https://buy.stripe.com/fZu7sE0M50v1cFb1OmfMA00";
 }
 
 
@@ -810,12 +775,8 @@ async function saveDeal() {
 
 async function downloadReport() {
 
-    const {
-        data: {
-            session
-        }
-    } =
-        await supabaseClient.auth.getSession();
+    const session =
+        await getCurrentSession();
 
 
     if (!session) {
@@ -836,9 +797,9 @@ async function downloadReport() {
 
         const upgradeNow =
             confirm(
-                "PDF Investor Reports are a Pro feature.\n\n" +
+                "🔒 PDF reports are a Pro feature.\n\n" +
                 "Upgrade to Pro for $9/month.\n\n" +
-                "Upgrade now?"
+                "Would you like to upgrade?"
             );
 
 
@@ -874,12 +835,53 @@ function generatePDF() {
 
     const {
         jsPDF
-    } =
-        window.jspdf;
+    } = window.jspdf;
 
 
     const doc =
         new jsPDF();
+
+
+    const propertyName =
+        document.getElementById(
+            "propertyName"
+        )?.value ||
+        "Rental Property";
+
+
+    const purchasePrice =
+        document.getElementById(
+            "purchasePrice"
+        )?.value ||
+        "0";
+
+
+    const arv =
+        document.getElementById(
+            "arv"
+        )?.value ||
+        "0";
+
+
+    const cashLeft =
+        document.getElementById(
+            "cashLeft"
+        )?.innerText ||
+        "$0";
+
+
+    const cashFlow =
+        document.getElementById(
+            "cashFlow"
+        )?.innerText ||
+        "$0";
+
+
+    const cashOnCash =
+        document.getElementById(
+            "cashOnCash"
+        )?.innerText ||
+        "0%";
 
 
     doc.setFontSize(20);
@@ -894,7 +896,7 @@ function generatePDF() {
     doc.setFontSize(14);
 
     doc.text(
-        "Professional Rental Property Analysis",
+        "Investor Property Report",
         20,
         35
     );
@@ -902,36 +904,19 @@ function generatePDF() {
 
     doc.setFontSize(12);
 
-
-    const purchasePrice =
-        document.getElementById(
-            "purchasePrice"
-        )?.value || "0";
-
-
-    const arv =
-        document.getElementById(
-            "arv"
-        )?.value || "0";
-
-
-    const cashFlow =
-        document.getElementById(
-            "cashFlow"
-        )?.innerText || "$0";
-
-
-    const cashOnCash =
-        document.getElementById(
-            "cashOnCash"
-        )?.innerText || "0%";
+    doc.text(
+        "Property: " +
+        propertyName,
+        20,
+        55
+    );
 
 
     doc.text(
         "Purchase Price: $" +
         purchasePrice,
         20,
-        55
+        70
     );
 
 
@@ -939,7 +924,15 @@ function generatePDF() {
         "ARV: $" +
         arv,
         20,
-        70
+        85
+    );
+
+
+    doc.text(
+        "Cash Left in Deal: " +
+        cashLeft,
+        20,
+        100
     );
 
 
@@ -947,7 +940,7 @@ function generatePDF() {
         "Monthly Cash Flow: " +
         cashFlow,
         20,
-        85
+        115
     );
 
 
@@ -955,14 +948,14 @@ function generatePDF() {
         "Cash-on-Cash Return: " +
         cashOnCash,
         20,
-        100
+        130
     );
 
 
     doc.text(
         "Generated by Rental Analyzer Pro",
         20,
-        125
+        155
     );
 
 
@@ -973,7 +966,32 @@ function generatePDF() {
 
 
 // ======================================================
-// STARTUP
+// AUTH STATE LISTENER
 // ======================================================
 
-checkLogin();
+supabaseClient.auth.onAuthStateChange(
+    async (event, session) => {
+
+        console.log(
+            "Auth event:",
+            event
+        );
+
+        await updateUserStatus();
+
+    }
+);
+
+
+// ======================================================
+// PAGE STARTUP
+// ======================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        await updateUserStatus();
+
+    }
+);
