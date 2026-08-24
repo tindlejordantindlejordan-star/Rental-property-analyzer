@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Rental Analyzer Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="hero">
+
+<h1>Investor Dashboard</h1>
+
+<p id="userEmail">
+Loading...
+</p>
+
+<button onclick="logout()">
+Logout
+</button>
+
+</header>
+
+
+<section class="features">
+
+<h2>
+My Saved Deals
+</h2>
+
+
+<div id="dealList" class="cards">
+
+<p>
+Loading deals...
+</p>
+
+</div>
+
+
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="dashboard.js"></script>
+
+
+</body>
+
+</html>
