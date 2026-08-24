@@ -249,3 +249,33 @@ window.location.href =
 "https://buy.stripe.com/fZu7sE0M50v1cFb1OmfMA00";
 
 }
+async function checkProStatus(){
+
+const {
+data:{
+user
+}
+}=await supabaseClient.auth.getUser();
+
+
+if(!user){
+return;
+}
+
+
+const {data:profile}=await supabaseClient
+.from("profiles")
+.select("is_pro")
+.eq("id", user.id)
+.single();
+
+
+if(profile && profile.is_pro){
+
+console.log("PRO USER");
+
+document.body.classList.add("pro-user");
+
+}
+
+}
