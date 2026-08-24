@@ -3,13 +3,13 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Rental Analyzer Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Analyzer Pro</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -17,290 +17,489 @@
 <body>
 
 
+<!-- ==================================================
+     NAVIGATION
+================================================== -->
+
 <header class="hero">
 
-<nav>
+    <nav>
 
-<h2>Rental Analyzer Pro</h2>
+        <h2>Rental Analyzer Pro</h2>
 
+        <div>
 
-<button onclick="login()">
-Login
-</button>
+            <button onclick="login()">
+                Login
+            </button>
 
+            <button onclick="signup()">
+                Create Free Account
+            </button>
 
-</nav>
+        </div>
 
-
-<div class="hero-content">
-
-<h1>
-Analyze Rental Properties Like a Pro Investor
-</h1>
-
-
-<p>
-Calculate cash flow, BRRRR returns,
-ROI, and track your real estate deals.
-</p>
+    </nav>
 
 
-<button onclick="analyze()">
-Analyze Your First Deal
-</button>
+    <div class="hero-content">
 
+        <h1>
+            Analyze Rental Properties
+            Like a Pro Investor
+        </h1>
 
-<button onclick="signup()">
-Create Free Account
-</button>
+        <p>
+            Calculate cash flow, BRRRR returns,
+            ROI, and determine whether a property
+            is worth buying.
+        </p>
 
+        <button onclick="document.getElementById('rental-calculator').scrollIntoView({behavior:'smooth'})">
+            Analyze Your First Deal
+        </button>
 
-</div>
+        <button onclick="signup()">
+            Create Free Account
+        </button>
+
+    </div>
 
 </header>
 
 
 
+<!-- ==================================================
+     ACCOUNT
+================================================== -->
+
 <section class="auth">
 
-<h2>Account</h2>
+    <h2>Your Account</h2>
+
+    <p>
+        Create a free account to access your investor tools.
+    </p>
 
 
-<input id="email" placeholder="Email">
+    <input
+        id="email"
+        type="email"
+        placeholder="Email"
+    >
 
 
-<input id="password"
-type="password"
-placeholder="Password">
+    <input
+        id="password"
+        type="password"
+        placeholder="Password"
+    >
 
 
-<button onclick="signup()">
-Create Account
-</button>
+    <div>
+
+        <button onclick="signup()">
+            Create Account
+        </button>
+
+        <button onclick="login()">
+            Login
+        </button>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
 
 
-<button onclick="login()">
-Login
-</button>
-
-
-<button onclick="logout()">
-Logout
-</button>
-
-
-<p id="userStatus">
-Not logged in
-</p>
-
+    <p id="userStatus">
+        Not logged in
+    </p>
 
 </section>
 
 
 
+<!-- ==================================================
+     RENTAL PROPERTY CALCULATOR
+================================================== -->
 
+<section
+    class="calculator"
+    id="rental-calculator"
+>
+
+    <h2>
+        Rental Property Analyzer
+    </h2>
+
+    <p>
+        Quickly calculate cash flow,
+        ROI, and cap rate.
+    </p>
+
+
+    <div class="grid">
+
+
+        <label>
+
+            Purchase Price
+
+            <input
+                id="price"
+                type="number"
+                value="200000"
+            >
+
+        </label>
+
+
+        <label>
+
+            Down Payment
+
+            <input
+                id="down"
+                type="number"
+                value="40000"
+            >
+
+        </label>
+
+
+        <label>
+
+            Monthly Rent
+
+            <input
+                id="rent"
+                type="number"
+                value="1800"
+            >
+
+        </label>
+
+
+        <label>
+
+            Monthly Expenses
+
+            <input
+                id="expenses"
+                type="number"
+                value="500"
+            >
+
+        </label>
+
+
+        <label>
+
+            Mortgage Payment
+
+            <input
+                id="mortgage"
+                type="number"
+                value="900"
+            >
+
+        </label>
+
+
+        <label>
+
+            Closing Costs
+
+            <input
+                id="closing"
+                type="number"
+                value="5000"
+            >
+
+        </label>
+
+
+    </div>
+
+
+    <button onclick="analyze()">
+        Analyze Property
+    </button>
+
+
+    <div id="result">
+
+        Enter your numbers above.
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     BRRRR CALCULATOR
+================================================== -->
 
 <section class="calculator">
 
+    <h2>
+        BRRRR Calculator
+    </h2>
 
-<h2>
-Rental Property Analyzer
-</h2>
-
-
-<div class="grid">
-
-
-<label>
-Purchase Price
-<input id="price" value="200000">
-</label>
+    <p>
+        Analyze your Buy, Rehab, Rent,
+        Refinance, Repeat strategy.
+    </p>
 
 
-<label>
-Down Payment
-<input id="down" value="40000">
-</label>
+    <div class="grid">
 
 
-<label>
-Monthly Rent
-<input id="rent" value="1800">
-</label>
+        <label>
+
+            Purchase Price
+
+            <input
+                id="purchasePrice"
+                type="number"
+                placeholder="100000"
+            >
+
+        </label>
 
 
-<label>
-Monthly Expenses
-<input id="expenses" value="500">
-</label>
+        <label>
+
+            Down Payment (%)
+
+            <input
+                id="downPaymentPercent"
+                type="number"
+                placeholder="20"
+            >
+
+        </label>
 
 
-<label>
-Mortgage Payment
-<input id="mortgage" value="900">
-</label>
+        <label>
+
+            Rehab Cost
+
+            <input
+                id="rehabCost"
+                type="number"
+                placeholder="30000"
+            >
+
+        </label>
 
 
-<label>
-Closing Costs
-<input id="closing" value="5000">
-</label>
+        <label>
+
+            Closing Costs
+
+            <input
+                id="closingCosts"
+                type="number"
+                placeholder="3000"
+            >
+
+        </label>
 
 
-</div>
+        <label>
+
+            Holding Costs
+
+            <input
+                id="holdingCosts"
+                type="number"
+                placeholder="5000"
+            >
+
+        </label>
 
 
-<button onclick="analyze()">
-Analyze Property
-</button>
+        <label>
+
+            After Repair Value (ARV)
+
+            <input
+                id="arv"
+                type="number"
+                placeholder="180000"
+            >
+
+        </label>
 
 
-<div id="result">
+        <label>
 
-Enter your numbers above.
+            Refinance LTV (%)
 
-</div>
+            <input
+                id="refiLTV"
+                type="number"
+                placeholder="75"
+            >
 
+        </label>
+
+
+        <label>
+
+            Current Loan Balance
+
+            <input
+                id="loanBalance"
+                type="number"
+                placeholder="80000"
+            >
+
+        </label>
+
+
+        <label>
+
+            Monthly Rental Income
+
+            <input
+                id="monthlyRent"
+                type="number"
+                placeholder="1500"
+            >
+
+        </label>
+
+
+        <label>
+
+            Monthly Expenses
+
+            <input
+                id="monthlyExpenses"
+                type="number"
+                placeholder="700"
+            >
+
+        </label>
+
+
+    </div>
+
+
+    <button onclick="calculateBRRRR()">
+        Analyze BRRRR Deal
+    </button>
+
+
+    <div class="results">
+
+        <h3>
+            BRRRR Results
+        </h3>
+
+
+        <p>
+            Cash Invested:
+            <strong id="cashInvested">$0</strong>
+        </p>
+
+
+        <p>
+            Refinance Loan:
+            <strong id="refiLoan">$0</strong>
+        </p>
+
+
+        <p>
+            Cash Returned:
+            <strong id="cashReturned">$0</strong>
+        </p>
+
+
+        <p>
+            Cash Left:
+            <strong id="cashLeft">$0</strong>
+        </p>
+
+
+        <p>
+            Monthly Cash Flow:
+            <strong id="cashFlow">$0</strong>
+        </p>
+
+
+        <p>
+            Cash-on-Cash Return:
+            <strong id="cashOnCash">0%</strong>
+        </p>
+
+
+        <p>
+            BRRRR Rating:
+            <strong id="brrrrScore">
+                —
+            </strong>
+        </p>
+
+    </div>
 
 </section>
 
 
 
-
-
-
-<section class="calculator">
-
-
-<h2>
-BRRRR Calculator
-</h2>
-
-
-<label>Purchase Price</label>
-<input id="purchasePrice">
-
-
-<label>Down Payment (%)</label>
-<input id="downPaymentPercent">
-
-
-<label>Rehab Cost</label>
-<input id="rehabCost">
-
-
-<label>Closing Costs</label>
-<input id="closingCosts">
-
-
-<label>Holding Costs</label>
-<input id="holdingCosts">
-
-
-<label>After Repair Value (ARV)</label>
-<input id="arv">
-
-
-<label>Refinance LTV (%)</label>
-<input id="refiLTV">
-
-
-<label>Current Loan Balance</label>
-<input id="loanBalance">
-
-
-<label>Monthly Rental Income</label>
-<input id="monthlyRent">
-
-
-<label>Monthly Expenses</label>
-<input id="monthlyExpenses">
-
-
-
-<button onclick="calculateBRRRR()">
-
-Analyze BRRRR Deal
-
-</button>
-
-
-
-<h3>Results</h3>
-
-
-<p>
-Cash Invested:
-<span id="cashInvested">$0</span>
-</p>
-
-
-<p>
-Refinance Loan:
-<span id="refiLoan">$0</span>
-</p>
-
-
-<p>
-Cash Returned:
-<span id="cashReturned">$0</span>
-</p>
-
-
-<p>
-Cash Left:
-<span id="cashLeft">$0</span>
-</p>
-
-
-<p>
-Monthly Cash Flow:
-<span id="cashFlow">$0</span>
-</p>
-
-
-<p>
-Cash On Cash:
-<span id="cashOnCash">0%</span>
-</p>
-
-
-<p>
-BRRRR Rating:
-<span id="brrrrScore"></span>
-</p>
-
-
-</section>
-
-
-
-
-
+<!-- ==================================================
+     PRO FEATURES
+================================================== -->
 
 <section class="pricing">
 
+    <h2>
+        Upgrade Your Investing
+    </h2>
 
-<h2>
-Upgrade Your Investing
-</h2>
+    <p>
+        Unlock the tools serious investors need
+        to organize and analyze their deals.
+    </p>
 
-
-<section class="pricing">
-
-    <h2>Choose Your Investor Plan</h2>
 
     <div class="cards">
 
+
+        <!-- FREE -->
+
         <div class="card">
 
-            <h3>Free</h3>
+            <h3>
+                Free
+            </h3>
 
-            <h2>$0</h2>
+            <h2>
+                $0
+            </h2>
 
-            <p>✓ Rental Analysis</p>
-            <p>✓ BRRRR Calculator</p>
-            <p>✓ Deal Analysis</p>
+
+            <p>
+                ✓ Rental Property Analysis
+            </p>
+
+            <p>
+                ✓ BRRRR Calculator
+            </p>
+
+            <p>
+                ✓ Cash Flow Analysis
+            </p>
+
+            <p>
+                ✓ ROI & Cap Rate
+            </p>
+
 
             <button onclick="signup()">
                 Start Free
@@ -309,17 +508,40 @@ Upgrade Your Investing
         </div>
 
 
+
+        <!-- PRO -->
+
         <div class="card">
 
-            <h3>Pro</h3>
+            <h3>
+                ⭐ Pro
+            </h3>
 
-            <h2>$9/month</h2>
+            <h2>
+                $9/month
+            </h2>
 
-            <p>✓ Everything in Free</p>
-            <p>✓ Save Unlimited Deals</p>
-            <p>✓ Investor PDF Reports</p>
-            <p>✓ Deal Dashboard</p>
-            <p>✓ Portfolio Tracking</p>
+
+            <p>
+                ✓ Everything in Free
+            </p>
+
+            <p>
+                ✓ Unlimited Saved Deals
+            </p>
+
+            <p>
+                ✓ Investor Dashboard
+            </p>
+
+            <p>
+                ✓ PDF Investor Reports
+            </p>
+
+            <p>
+                ✓ Portfolio Tracking
+            </p>
+
 
             <button onclick="upgrade()">
                 Upgrade to Pro
@@ -327,54 +549,71 @@ Upgrade Your Investing
 
         </div>
 
+
     </div>
 
 </section>
 
 
 
+<!-- ==================================================
+     SAVE DEAL
+================================================== -->
+
+<section class="calculator">
+
+    <h2>
+        🔒 Save Your Deal
+    </h2>
+
+    <p>
+        Save your analyzed properties to your
+        investor dashboard.
+    </p>
 
 
-
-<section>
-
-<h2>
-Save Deal
-</h2>
-
-
-<input id="propertyName"
-placeholder="Property Name">
+    <input
+        id="propertyName"
+        type="text"
+        placeholder="Property Name"
+    >
 
 
-<button onclick="saveDeal()">
-
-Save Deal
-
-</button>
-
+    <button onclick="saveDeal()">
+        🔒 Save Deal — Pro
+    </button>
 
 </section>
 
-<button onclick="saveDeal()">
-    🔒 Save Deal — Pro
-</button>
-
-<button onclick="downloadReport()">
-    🔒 Download Investor Report — Pro
-</button>
 
 
+<!-- ==================================================
+     PDF REPORT
+================================================== -->
 
-<button id="pdfButton" onclick="downloadReport()">
+<section class="calculator">
 
-Download Investor Report PDF
+    <h2>
+        🔒 Investor Report
+    </h2>
 
-</button>
+    <p>
+        Generate a professional PDF report
+        for your analyzed property.
+    </p>
+
+
+    <button onclick="downloadReport()">
+        🔒 Download Investor Report PDF
+    </button>
+
+</section>
 
 
 
-
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
