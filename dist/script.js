@@ -1,10 +1,7 @@
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-
-const SUPABASE_KEY = "YOUR_ANON_KEY";
-
 const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+    https://supabase.com/dashboard/project/mbxqkkkynkddrecpgyrf/settings/api-keys,
+    sb_publishable_g26n0VVcxkp0Yo8vgZbrOg_ytLd42rK
+);
 
 let price = Number(document.getElementById("price").value);
 let down = Number(document.getElementById("down").value);
