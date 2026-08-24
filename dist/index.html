@@ -5,11 +5,19 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Rental Analyzer Pro</title>
+    <title>
+        Rental Analyzer Pro
+    </title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
@@ -25,15 +33,23 @@
 
     <nav>
 
-        <h2>Rental Analyzer Pro</h2>
+        <h2>
+            Rental Analyzer Pro
+        </h2>
+
 
         <div>
 
-            <button onclick="login()">
+            <button
+                onclick="document.getElementById('email').focus()"
+            >
                 Login
             </button>
 
-            <button onclick="signup()">
+
+            <button
+                onclick="signup()"
+            >
                 Create Free Account
             </button>
 
@@ -49,17 +65,24 @@
             Like a Pro Investor
         </h1>
 
+
         <p>
             Calculate cash flow, BRRRR returns,
-            ROI, and determine whether a property
-            is worth buying.
+            ROI, cap rate, and determine whether
+            a property is worth buying.
         </p>
 
-        <button onclick="document.getElementById('rental-calculator').scrollIntoView({behavior:'smooth'})">
+
+        <button
+            onclick="document.getElementById('rental-calculator').scrollIntoView({behavior:'smooth'})"
+        >
             Analyze Your First Deal
         </button>
 
-        <button onclick="signup()">
+
+        <button
+            onclick="document.getElementById('account').scrollIntoView({behavior:'smooth'})"
+        >
             Create Free Account
         </button>
 
@@ -73,12 +96,18 @@
      ACCOUNT
 ================================================== -->
 
-<section class="auth">
+<section
+    class="auth"
+    id="account"
+>
 
-    <h2>Your Account</h2>
+    <h2>
+        Your Investor Account
+    </h2>
+
 
     <p>
-        Create a free account to access your investor tools.
+        Login or create your free account.
     </p>
 
 
@@ -86,6 +115,7 @@
         id="email"
         type="email"
         placeholder="Email"
+        autocomplete="email"
     >
 
 
@@ -93,20 +123,29 @@
         id="password"
         type="password"
         placeholder="Password"
+        autocomplete="current-password"
     >
 
 
     <div>
 
-        <button onclick="signup()">
+        <button
+            onclick="signup()"
+        >
             Create Account
         </button>
 
-        <button onclick="login()">
+
+        <button
+            onclick="login()"
+        >
             Login
         </button>
 
-        <button onclick="logout()">
+
+        <button
+            onclick="logout()"
+        >
             Logout
         </button>
 
@@ -122,7 +161,7 @@
 
 
 <!-- ==================================================
-     RENTAL PROPERTY CALCULATOR
+     RENTAL CALCULATOR
 ================================================== -->
 
 <section
@@ -134,9 +173,9 @@
         Rental Property Analyzer
     </h2>
 
+
     <p>
-        Quickly calculate cash flow,
-        ROI, and cap rate.
+        Analyze the numbers before you buy.
     </p>
 
 
@@ -220,11 +259,12 @@
 
         </label>
 
-
     </div>
 
 
-    <button onclick="analyze()">
+    <button
+        onclick="analyze()"
+    >
         Analyze Property
     </button>
 
@@ -249,9 +289,9 @@
         BRRRR Calculator
     </h2>
 
+
     <p>
-        Analyze your Buy, Rehab, Rent,
-        Refinance, Repeat strategy.
+        Buy. Rehab. Rent. Refinance. Repeat.
     </p>
 
 
@@ -325,7 +365,7 @@
 
         <label>
 
-            After Repair Value (ARV)
+            After Repair Value
 
             <input
                 id="arv"
@@ -387,11 +427,12 @@
 
         </label>
 
-
     </div>
 
 
-    <button onclick="calculateBRRRR()">
+    <button
+        onclick="calculateBRRRR()"
+    >
         Analyze BRRRR Deal
     </button>
 
@@ -405,37 +446,49 @@
 
         <p>
             Cash Invested:
-            <strong id="cashInvested">$0</strong>
+            <strong id="cashInvested">
+                $0
+            </strong>
         </p>
 
 
         <p>
             Refinance Loan:
-            <strong id="refiLoan">$0</strong>
+            <strong id="refiLoan">
+                $0
+            </strong>
         </p>
 
 
         <p>
             Cash Returned:
-            <strong id="cashReturned">$0</strong>
+            <strong id="cashReturned">
+                $0
+            </strong>
         </p>
 
 
         <p>
             Cash Left:
-            <strong id="cashLeft">$0</strong>
+            <strong id="cashLeft">
+                $0
+            </strong>
         </p>
 
 
         <p>
             Monthly Cash Flow:
-            <strong id="cashFlow">$0</strong>
+            <strong id="cashFlow">
+                $0
+            </strong>
         </p>
 
 
         <p>
-            Cash-on-Cash Return:
-            <strong id="cashOnCash">0%</strong>
+            Cash-on-Cash:
+            <strong id="cashOnCash">
+                0%
+            </strong>
         </p>
 
 
@@ -453,19 +506,14 @@
 
 
 <!-- ==================================================
-     PRO FEATURES
+     PRICING
 ================================================== -->
 
 <section class="pricing">
 
     <h2>
-        Upgrade Your Investing
+        Choose Your Investor Plan
     </h2>
-
-    <p>
-        Unlock the tools serious investors need
-        to organize and analyze their deals.
-    </p>
 
 
     <div class="cards">
@@ -479,29 +527,35 @@
                 Free
             </h3>
 
+
             <h2>
                 $0
             </h2>
 
 
             <p>
-                ✓ Rental Property Analysis
+                ✓ Rental Analysis
             </p>
+
 
             <p>
                 ✓ BRRRR Calculator
             </p>
 
+
             <p>
                 ✓ Cash Flow Analysis
             </p>
+
 
             <p>
                 ✓ ROI & Cap Rate
             </p>
 
 
-            <button onclick="signup()">
+            <button
+                onclick="document.getElementById('account').scrollIntoView({behavior:'smooth'})"
+            >
                 Start Free
             </button>
 
@@ -517,6 +571,7 @@
                 ⭐ Pro
             </h3>
 
+
             <h2>
                 $9/month
             </h2>
@@ -526,29 +581,34 @@
                 ✓ Everything in Free
             </p>
 
+
             <p>
                 ✓ Unlimited Saved Deals
             </p>
+
 
             <p>
                 ✓ Investor Dashboard
             </p>
 
+
             <p>
                 ✓ PDF Investor Reports
             </p>
+
 
             <p>
                 ✓ Portfolio Tracking
             </p>
 
 
-            <button onclick="upgrade()">
+            <button
+                onclick="upgrade()"
+            >
                 Upgrade to Pro
             </button>
 
         </div>
-
 
     </div>
 
@@ -566,8 +626,9 @@
         🔒 Save Your Deal
     </h2>
 
+
     <p>
-        Save your analyzed properties to your
+        Pro members can save deals to their
         investor dashboard.
     </p>
 
@@ -579,7 +640,9 @@
     >
 
 
-    <button onclick="saveDeal()">
+    <button
+        onclick="saveDeal()"
+    >
         🔒 Save Deal — Pro
     </button>
 
@@ -597,13 +660,16 @@
         🔒 Investor Report
     </h2>
 
+
     <p>
         Generate a professional PDF report
-        for your analyzed property.
+        for your property.
     </p>
 
 
-    <button onclick="downloadReport()">
+    <button
+        onclick="downloadReport()"
+    >
         🔒 Download Investor Report PDF
     </button>
 
@@ -612,7 +678,7 @@
 
 
 <!-- ==================================================
-     JAVASCRIPT
+     SCRIPTS
 ================================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
