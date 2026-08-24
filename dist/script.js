@@ -353,74 +353,78 @@ checkProStatus();
 // ===============================
 // PDF REPORT
 // ===============================
+// ===============================
+// PDF - PRO ONLY
+// ===============================
+
+async function downloadReport() {
+
+    const {
+        data: { session },
+        error: sessionError
+    } = await supabaseClient.auth.getSession();
 
 
-async function downloadReport(){
+    if (sessionError) {
 
-const {
-data:{user}
-}=await supabaseClient.auth.getUser();
+        alert("Unable to check your account.");
+
+        return;
+    }
 
 
-if(!user){
+    if (!session) {
 
-alert("Please login first");
+        alert("Please login or create an account first.");
 
-return;
+        return;
+    }
+
+
+    const {
+        data: profile,
+        error
+    } = await supabaseClient
+        .from("profiles")
+        .select("is_pro")
+        .eq("id", session.user.id)
+        .single();
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert("Unable to verify your membership.");
+
+        return;
+    }
+
+
+    if (!profile || profile.is_pro !== true) {
+
+        const upgradeNow = confirm(
+            "PDF Investor Reports are a Pro feature.\n\n" +
+            "Upgrade to Pro for $9/month to unlock PDF reports.\n\n" +
+            "Upgrade now?"
+        );
+
+
+        if (upgradeNow) {
+
+            upgrade();
+
+        }
+
+        return;
+    }
+
+
+    generatePDF();
 
 }
 
 
-const {data:profile}=await supabaseClient
-.from("profiles")
-.select("is_pro")
-.eq("id",user.id)
-.single();
-
-
-if(!profile || !profile.is_pro){
-
-alert("PDF Reports require Pro membership.");
-
-return;
-
-}
-
-
-generatePDF();
-
-
-}
-
-
-
-function generatePDF(){
-
-const {jsPDF}=window.jspdf;
-
-const doc=new jsPDF();
-
-
-doc.text(
-"Rental Analyzer Pro Report",
-20,
-20
-);
-
-
-doc.text(
-"Professional Real Estate Analysis",
-20,
-40
-);
-
-
-doc.save(
-"Rental-Analysis-Report.pdf"
-);
-
-
-}
 // ===============================
 // SAVE DEAL - PRO ONLY
 // ===============================
