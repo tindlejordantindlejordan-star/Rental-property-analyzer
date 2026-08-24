@@ -1,4 +1,11 @@
-function analyze(){
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+
+const SUPABASE_KEY = "YOUR_ANON_KEY";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);function analyze(){
 
 let price = Number(document.getElementById("price").value);
 let down = Number(document.getElementById("down").value);
