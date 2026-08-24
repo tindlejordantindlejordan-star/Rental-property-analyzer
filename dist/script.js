@@ -279,3 +279,4 @@ document.body.classList.add("pro-user");
 }
 
 }
+checkProStatus();
