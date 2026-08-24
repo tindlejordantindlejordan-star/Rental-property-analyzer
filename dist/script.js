@@ -280,3 +280,44 @@ document.body.classList.add("pro-user");
 
 }
 checkProStatus();
+async function downloadReport(){
+
+const {
+data:{
+user
+}
+}=await supabaseClient.auth.getUser();
+
+
+if(!user){
+
+alert("Please create an account first.");
+
+return;
+
+}
+
+
+const {data:profile}=await supabaseClient
+.from("profiles")
+.select("is_pro")
+.eq("id", user.id)
+.single();
+
+
+if(!profile || !profile.is_pro){
+
+alert(
+"PDF Reports are a Pro feature. Upgrade to unlock investor reports."
+);
+
+return;
+
+}
+
+
+// Generate PDF here
+
+generatePDF();
+
+}
