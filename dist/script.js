@@ -243,4 +243,9 @@ password
 
 alert("Logged in");
 
+}function upgrade(){
+
+window.location.href =
+"https://YOUR-STRIPE-CHECKOUT-LINK";
+
 }
