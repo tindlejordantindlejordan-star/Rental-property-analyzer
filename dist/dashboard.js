@@ -1,4 +1,4 @@
-const SUPABASE_URL = "https://supabase.com/dashboard/project/mbxqkkkynkddrecpgyrf/settings/api-keys";
+const SUPABASE_URL = "https://supabase.com/dashboard/project/mbxqkkkynkddrecpgyrf";
 
 const SUPABASE_KEY = "sb_publishable_g26n0VVcxkp0Yo8vgZbrOg_ytLd42rK";
 
