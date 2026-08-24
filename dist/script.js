@@ -42,8 +42,8 @@ Cap Rate:
 <br><br>
 
 ${cashflow > 0 
-? "✅ This property has positive cash flow"
-: "⚠️ This property loses money monthly"}
+? " This property has positive cash flow"
+: " This property loses money monthly"}
 
 `;
 
@@ -141,13 +141,13 @@ ${cashflow > 0
 
 
     if(cashLeft <= 10000 && cashOnCash >= 20){
-        rating = "🟢 Excellent BRRRR Deal";
+        rating = " Excellent BRRRR Deal";
     }
     else if(cashLeft <= 25000){
-        rating = "🟡 Good Deal";
+        rating = " Good Deal";
     }
     else{
-        rating = "🔴 Needs Improvement";
+        rating = " Needs Improvement";
     }
 
 
