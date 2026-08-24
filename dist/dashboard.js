@@ -1,6 +1,6 @@
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_URL = "https://supabase.com/dashboard/project/mbxqkkkynkddrecpgyrf/settings/api-keys";
 
-const SUPABASE_KEY = "YOUR_ANON_KEY";
+const SUPABASE_KEY = "sb_publishable_g26n0VVcxkp0Yo8vgZbrOg_ytLd42rK";
 
 
 const supabaseClient = supabase.createClient(
