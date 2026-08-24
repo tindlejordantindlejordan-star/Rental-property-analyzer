@@ -1,12 +1,18 @@
-<button onclick="upgrade()">
-Upgrade to Pro - $9/month
-</button><!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+
+<meta charset="UTF-8">
+
 <title>Rental Analyzer Pro</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
@@ -14,11 +20,15 @@ Upgrade to Pro - $9/month
 <header class="hero">
 
 <nav>
+
 <h2>Rental Analyzer Pro</h2>
+
 
 <button onclick="login()">
 Login
 </button>
+
+
 </nav>
 
 
@@ -28,18 +38,19 @@ Login
 Analyze Rental Properties Like a Pro Investor
 </h1>
 
+
 <p>
 Calculate cash flow, BRRRR returns,
 ROI, and track your real estate deals.
 </p>
 
 
-<button>
+<button onclick="analyze()">
 Analyze Your First Deal
 </button>
 
 
-<button class="secondary">
+<button onclick="signup()">
 Create Free Account
 </button>
 
@@ -50,265 +61,256 @@ Create Free Account
 
 
 
-<section class="features">
+<section class="auth">
 
-<h2>
-Everything You Need To Analyze Deals
-</h2>
+<h2>Account</h2>
 
-
-<div class="cards">
-
-
-<div class="card">
-<h3> Rental Analysis</h3>
-<p>
-Calculate monthly cash flow,
-expenses, and returns.
-</p>
-</div>
-
-
-<div class="card">
-<h3> BRRRR Calculator</h3>
-<p>
-Analyze buy, rehab, refinance,
-rent, repeat strategies.
-</p>
-</div>
-
-
-<div class="card">
-<h3> Deal Score</h3>
-<p>
-Instantly see if a property
-is worth pursuing.
-</p>
-</div>
-
-
-<div class="card">
-<h3> Saved Deals</h3>
-<p>
-Keep your investment
-portfolio organized.
-</p>
-</div>
-
-
-</div>
-
-</section>
-
-
-
-<section class="how">
-
-<h2>
-How It Works
-</h2>
-
-<div class="steps">
-
-<div>
-<h3>1</h3>
-<p>Enter property numbers</p>
-</div>
-
-<div>
-<h3>2</h3>
-<p>Analyze your returns</p>
-</div>
-
-<div>
-<h3>3</h3>
-<p>Save your best deals</p>
-</div>
-
-</div>
-
-</section>
-
-
-
-<section class="cta">
-
-<h2>
-Start Finding Better Deals Today
-</h2>
-
-<p>
-Free account. No credit card required.
-</p>
-
-<button>
-Create Free Account
-</button>
-
-</section>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="script.js"></script>
-
-</body>
-</html>
 
 <input id="email" placeholder="Email">
 
-<input id="password" 
-type="password" 
+
+<input id="password"
+type="password"
 placeholder="Password">
+
 
 <button onclick="signup()">
 Create Account
 </button>
 
+
 <button onclick="login()">
 Login
 </button>
+
 
 <button onclick="logout()">
 Logout
 </button>
 
+
 <p id="userStatus">
 Not logged in
-</p><!DOCTYPE html>
-<html lang="en">
+</p>
 
-  <head>
-    <meta charset="UTF-8">
-    <title>RentalIQ - Rental Property Analyzer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style.css">
-  </head>
 
-  <body>
-    <div class="container">
-<h1>Rental Property Analyzer</h1>
-<p>Analyze your rental deal before buying.</p>
+</section>
+
+
+
+
+
+<section class="calculator">
+
+
+<h2>
+Rental Property Analyzer
+</h2>
+
 
 <div class="grid">
-<label>Purchase Price
+
+
+<label>
+Purchase Price
 <input id="price" value="200000">
 </label>
 
-<label>Down Payment
+
+<label>
+Down Payment
 <input id="down" value="40000">
 </label>
 
-<label>Monthly Rent
+
+<label>
+Monthly Rent
 <input id="rent" value="1800">
 </label>
 
-<label>Monthly Expenses
+
+<label>
+Monthly Expenses
 <input id="expenses" value="500">
 </label>
 
-<label>Mortgage Payment
+
+<label>
+Mortgage Payment
 <input id="mortgage" value="900">
 </label>
 
-<label>Closing Costs
+
+<label>
+Closing Costs
 <input id="closing" value="5000">
 </label>
+
+
 </div>
 
-<button onclick="analyze()">Analyze Property</button>
+
+<button onclick="analyze()">
+Analyze Property
+</button>
+
 
 <div id="result">
-Enter your numbers above.
-</div>
-</div><h2>BRRRR Calculator</h2>
 
-<div class="calculator">
+Enter your numbers above.
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<section class="calculator">
+
+
+<h2>
+BRRRR Calculator
+</h2>
+
 
 <label>Purchase Price</label>
-<input id="purchasePrice" type="number" placeholder="100000">
+<input id="purchasePrice">
+
 
 <label>Down Payment (%)</label>
-<input id="downPaymentPercent" type="number" placeholder="20">
+<input id="downPaymentPercent">
+
 
 <label>Rehab Cost</label>
-<input id="rehabCost" type="number" placeholder="30000">
+<input id="rehabCost">
+
 
 <label>Closing Costs</label>
-<input id="closingCosts" type="number" placeholder="3000">
+<input id="closingCosts">
+
 
 <label>Holding Costs</label>
-<input id="holdingCosts" type="number" placeholder="5000">
+<input id="holdingCosts">
+
 
 <label>After Repair Value (ARV)</label>
-<input id="arv" type="number" placeholder="180000">
+<input id="arv">
+
 
 <label>Refinance LTV (%)</label>
-<input id="refiLTV" type="number" placeholder="75">
+<input id="refiLTV">
+
 
 <label>Current Loan Balance</label>
-<input id="loanBalance" type="number" placeholder="80000">
+<input id="loanBalance">
+
 
 <label>Monthly Rental Income</label>
-<input id="monthlyRent" type="number" placeholder="1500">
+<input id="monthlyRent">
+
 
 <label>Monthly Expenses</label>
-<input id="monthlyExpenses" type="number" placeholder="700">
+<input id="monthlyExpenses">
 
-<button onclick="calculateBRRRR()">Analyze BRRRR Deal</button>
+
+
+<button onclick="calculateBRRRR()">
+
+Analyze BRRRR Deal
+
+</button>
+
 
 
 <h3>Results</h3>
 
-<p>Total Cash Invested:
-<span id="cashInvested">$0</span></p>
 
-<p>Refinance Loan:
-<span id="refiLoan">$0</span></p>
+<p>
+Cash Invested:
+<span id="cashInvested">$0</span>
+</p>
 
-<p>Cash Returned:
-<span id="cashReturned">$0</span></p>
 
-<p>Cash Left In Deal:
-<span id="cashLeft">$0</span></p>
+<p>
+Refinance Loan:
+<span id="refiLoan">$0</span>
+</p>
 
-<p>Monthly Cash Flow:
-<span id="cashFlow">$0</span></p>
 
-<p>Cash On Cash Return:
-<span id="cashOnCash">0%</span></p>
+<p>
+Cash Returned:
+<span id="cashReturned">$0</span>
+</p>
 
-<p>BRRRR Rating:
-<span id="brrrrScore"></span></p>
 
-</div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><input id="propertyName" 
-placeholder="Property Name">
+<p>
+Cash Left:
+<span id="cashLeft">$0</span>
+</p>
 
-<button onclick="saveDeal()">
-Save Deal
-</button>
-    <script src="/script.js"></script>
-  </body>
 
-</html>
+<p>
+Monthly Cash Flow:
+<span id="cashFlow">$0</span>
+</p>
+
+
+<p>
+Cash On Cash:
+<span id="cashOnCash">0%</span>
+</p>
+
+
+<p>
+BRRRR Rating:
+<span id="brrrrScore"></span>
+</p>
+
+
+</section>
+
+
+
+
+
+
 <section class="pricing">
 
-<h2>Upgrade Your Investing</h2>
+
+<h2>
+Upgrade Your Investing
+</h2>
+
 
 <div class="card">
 
-<h3>Free</h3>
+
+<h3>
+Free
+</h3>
+
 
 <p>
 ✓ Rental calculator<br>
 ✓ 3 saved deals
 </p>
 
+
 </div>
+
 
 
 <div class="card">
 
-<h3>Pro - $9/month</h3>
+
+<h3>
+Pro - $9/month
+</h3>
+
 
 <p>
 ✓ Unlimited deals<br>
@@ -318,16 +320,65 @@ Save Deal
 </p>
 
 
+
 <button onclick="upgrade()">
-Upgrade Now
+
+Upgrade to Pro - $9/month
+
 </button>
+
 
 </div>
 
+
 </section>
-<button id="pdfButton" onclick="downloadReport()">
-Download Investor Report PDF
+
+
+
+
+
+
+<section>
+
+<h2>
+Save Deal
+</h2>
+
+
+<input id="propertyName"
+placeholder="Property Name">
+
+
+<button onclick="saveDeal()">
+
+Save Deal
+
 </button>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+</section>
+
+
+
+
+
+<button id="pdfButton" onclick="downloadReport()">
+
+Download Investor Report PDF
+
+</button>
+
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script src="script.js"></script>
+
+
+</body>
+
+</html>
