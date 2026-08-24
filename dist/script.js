@@ -321,3 +321,54 @@ return;
 generatePDF();
 
 }
+function generatePDF(){
+
+const { jsPDF } = window.jspdf;
+
+const doc = new jsPDF();
+
+
+doc.setFontSize(20);
+
+doc.text(
+"Rental Analyzer Pro Report",
+20,
+20
+);
+
+
+doc.setFontSize(12);
+
+doc.text(
+"Property Analysis",
+20,
+40
+);
+
+
+doc.text(
+"Purchase Price: $" + purchasePrice,
+20,
+60
+);
+
+
+doc.text(
+"Monthly Cash Flow: $" + cashFlow,
+20,
+75
+);
+
+
+doc.text(
+"ROI: " + roi + "%",
+20,
+90
+);
+
+
+doc.save(
+"Rental-Analysis-Report.pdf"
+);
+
+}
