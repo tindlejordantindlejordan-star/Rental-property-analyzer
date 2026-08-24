@@ -421,78 +421,156 @@ doc.save(
 
 
 }
+// ===============================
+// SAVE DEAL - PRO ONLY
+// ===============================
+
 async function saveDeal() {
 
+    // Check login
     const {
         data: { session },
         error: sessionError
     } = await supabaseClient.auth.getSession();
 
     if (sessionError) {
-        console.error(sessionError);
-        alert("Unable to check login.");
+        alert("Unable to check your account.");
         return;
     }
 
     if (!session) {
-        alert("Please log in first.");
+        alert("Please login or create an account first.");
         return;
     }
 
+
+    // Check Pro status
+    const {
+        data: profile,
+        error: profileError
+    } = await supabaseClient
+        .from("profiles")
+        .select("is_pro")
+        .eq("id", session.user.id)
+        .single();
+
+
+    if (profileError) {
+
+        console.error(profileError);
+
+        alert("Unable to verify your membership.");
+
+        return;
+    }
+
+
+    // Not Pro
+    if (!profile || profile.is_pro !== true) {
+
+        const upgradeNow = confirm(
+            "Saving deals is a Pro feature.\n\n" +
+            "Upgrade to Pro for $9/month to save unlimited deals.\n\n" +
+            "Upgrade now?"
+        );
+
+        if (upgradeNow) {
+            upgrade();
+        }
+
+        return;
+    }
+
+
+    // ===============================
+    // PRO USER - SAVE DEAL
+    // ===============================
+
+    const propertyName =
+        document
+            .getElementById("propertyName")
+            .value
+            .trim();
+
+
+    if (!propertyName) {
+
+        alert("Please enter a property name.");
+
+        return;
+    }
+
+
     const deal = {
+
         user_id: session.user.id,
 
-        property_name:
-            document.getElementById("propertyName").value,
+        property_name: propertyName,
 
         purchase_price:
-            Number(document.getElementById("purchasePrice").value),
+            Number(
+                document.getElementById("purchasePrice").value
+            ) || 0,
 
         rehab_cost:
-            Number(document.getElementById("rehabCost").value),
+            Number(
+                document.getElementById("rehabCost").value
+            ) || 0,
 
         arv:
-            Number(document.getElementById("arv").value),
+            Number(
+                document.getElementById("arv").value
+            ) || 0,
 
         cash_left:
             Number(
                 document
-                .getElementById("cashLeft")
-                .innerText
-                .replace(/[$,]/g, "")
-            ),
+                    .getElementById("cashLeft")
+                    .innerText
+                    .replace(/[$,]/g, "")
+            ) || 0,
 
         monthly_cash_flow:
             Number(
                 document
-                .getElementById("cashFlow")
-                .innerText
-                .replace(/[$,\/month]/g, "")
-            ),
+                    .getElementById("cashFlow")
+                    .innerText
+                    .replace(/[$,\/month]/g, "")
+            ) || 0,
 
         cash_on_cash:
             Number(
                 document
-                .getElementById("cashOnCash")
-                .innerText
-                .replace("%", "")
-            )
+                    .getElementById("cashOnCash")
+                    .innerText
+                    .replace("%", "")
+            ) || 0
     };
 
-    console.log("Saving:", deal);
 
-    const { error } = await supabaseClient
+    const {
+        data,
+        error
+    } = await supabaseClient
         .from("deals")
-        .insert([deal]);
+        .insert([deal])
+        .select()
+        .single();
+
 
     if (error) {
 
-        console.error("Save error:", error);
+        console.error("SAVE DEAL ERROR:", error);
 
-        alert("Error saving deal: " + error.message);
+        alert(
+            "Error saving deal:\n\n" +
+            error.message
+        );
 
         return;
     }
 
-    alert("Deal saved successfully!");
+
+    alert("✅ Deal saved successfully!");
+
 }
