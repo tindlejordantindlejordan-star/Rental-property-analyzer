@@ -1,12 +1,10 @@
-// ======================================================
-// RENTAL ANALYZER PRO
-// CLEAN MASTER SCRIPT
-// ======================================================
+// ============================================================
+// RENTAL ANALYZER PRO - COMPLETE SCRIPT
+// ============================================================
 
-
-// ======================================================
+// -----------------------------
 // SUPABASE
-// ======================================================
+// -----------------------------
 
 const SUPABASE_URL =
     "https://mbxqkkkynkddrecpgyrf.supabase.co";
@@ -21,29 +19,24 @@ const supabaseClient =
     );
 
 
-// ======================================================
-// GET CURRENT SESSION
-// ======================================================
+// ============================================================
+// PAGE STARTUP
+// ============================================================
 
-async function getCurrentSession() {
+document.addEventListener("DOMContentLoaded", async () => {
 
-    const {
-        data,
-        error
-    } = await supabaseClient.auth.getSession();
+    console.log("Rental Analyzer loaded");
 
-    if (error) {
-        console.error("Session error:", error);
-        return null;
-    }
+    await updateUserStatus();
 
-    return data.session;
-}
+    await checkProStatus();
+
+});
 
 
-// ======================================================
-// UPDATE ACCOUNT STATUS
-// ======================================================
+// ============================================================
+// USER STATUS
+// ============================================================
 
 async function updateUserStatus() {
 
@@ -52,43 +45,52 @@ async function updateUserStatus() {
 
     if (!status) return;
 
+    const {
+        data,
+        error
+    } = await supabaseClient.auth.getSession();
 
-    const session =
-        await getCurrentSession();
+    if (error) {
 
+        console.error("Session error:", error);
 
-    if (session) {
+        status.innerText = "Not logged in";
+
+        return;
+    }
+
+    if (data.session) {
 
         status.innerHTML =
-            "✅ Logged in as " +
-            session.user.email;
+            "✅ Logged in as: " +
+            data.session.user.email;
 
     } else {
 
-        status.innerHTML =
+        status.innerText =
             "Not logged in";
 
     }
 }
 
 
-// ======================================================
+// ============================================================
 // SIGN UP
-// ======================================================
+// ============================================================
 
 async function signup() {
 
-    const emailInput =
+    const emailElement =
         document.getElementById("email");
 
-    const passwordInput =
+    const passwordElement =
         document.getElementById("password");
 
 
-    if (!emailInput || !passwordInput) {
+    if (!emailElement || !passwordElement) {
 
         alert(
-            "Email and password fields are missing."
+            "Login fields could not be found."
         );
 
         return;
@@ -96,10 +98,10 @@ async function signup() {
 
 
     const email =
-        emailInput.value.trim();
+        emailElement.value.trim();
 
     const password =
-        passwordInput.value;
+        passwordElement.value;
 
 
     if (!email || !password) {
@@ -120,6 +122,12 @@ async function signup() {
 
         return;
     }
+
+
+    console.log(
+        "Creating account for:",
+        email
+    );
 
 
     const {
@@ -154,7 +162,7 @@ async function signup() {
     if (data.session) {
 
         alert(
-            "Account created and you're logged in!"
+            "Account created! You are now logged in."
         );
 
         await updateUserStatus();
@@ -162,30 +170,36 @@ async function signup() {
     } else {
 
         alert(
-            "Account created! Check your email to confirm your account before logging in."
+            "Account created! Check your email to confirm your account, then log in."
         );
 
     }
+
 }
 
 
-// ======================================================
+// ============================================================
 // LOGIN
-// ======================================================
+// ============================================================
 
 async function login() {
 
-    const emailInput =
+    console.log(
+        "LOGIN BUTTON CLICKED"
+    );
+
+
+    const emailElement =
         document.getElementById("email");
 
-    const passwordInput =
+    const passwordElement =
         document.getElementById("password");
 
 
-    if (!emailInput || !passwordInput) {
+    if (!emailElement || !passwordElement) {
 
         alert(
-            "Email and password fields are missing."
+            "Login fields could not be found."
         );
 
         return;
@@ -193,10 +207,16 @@ async function login() {
 
 
     const email =
-        emailInput.value.trim();
+        emailElement.value.trim();
 
     const password =
-        passwordInput.value;
+        passwordElement.value;
+
+
+    console.log(
+        "Email:",
+        email
+    );
 
 
     if (!email || !password) {
@@ -222,7 +242,7 @@ async function login() {
     if (error) {
 
         console.error(
-            "Login error:",
+            "LOGIN ERROR:",
             error
         );
 
@@ -233,8 +253,8 @@ async function login() {
 
 
     console.log(
-        "Logged in:",
-        data.user.email
+        "LOGIN SUCCESS:",
+        data.user
     );
 
 
@@ -242,18 +262,20 @@ async function login() {
 
 
     alert(
-        "✅ Login successful!"
+        "Login successful!"
     );
 
 
+    // Send user to dashboard
     window.location.href =
         "dashboard.html";
+
 }
 
 
-// ======================================================
+// ============================================================
 // LOGOUT
-// ======================================================
+// ============================================================
 
 async function logout() {
 
@@ -278,64 +300,72 @@ async function logout() {
 
     window.location.href =
         "index.html";
+
 }
 
 
-// ======================================================
+// ============================================================
 // RENTAL CALCULATOR
-// ======================================================
+// ============================================================
 
 function analyze() {
 
     const price =
         Number(
             document.getElementById("price").value
-        ) || 0;
+        );
 
     const down =
         Number(
             document.getElementById("down").value
-        ) || 0;
+        );
 
     const rent =
         Number(
             document.getElementById("rent").value
-        ) || 0;
+        );
 
     const expenses =
         Number(
             document.getElementById("expenses").value
-        ) || 0;
+        );
 
     const mortgage =
         Number(
             document.getElementById("mortgage").value
-        ) || 0;
+        );
 
     const closing =
         Number(
             document.getElementById("closing").value
-        ) || 0;
+        );
 
 
-    const cashFlow =
-        rent - expenses - mortgage;
+    const cashflow =
+        rent -
+        expenses -
+        mortgage;
 
-    const annualCashFlow =
-        cashFlow * 12;
+
+    const annualCashflow =
+        cashflow * 12;
+
 
     const invested =
-        down + closing;
+        down +
+        closing;
+
 
     const roi =
         invested > 0
-            ? (annualCashFlow / invested) * 100
-            : 0;
+        ? (annualCashflow / invested) * 100
+        : 0;
+
 
     const capRate =
         price > 0
-            ? (((rent - expenses) * 12) / price) * 100
-            : 0;
+        ? (((rent - expenses) * 12) / price) * 100
+        : 0;
 
 
     const result =
@@ -348,107 +378,100 @@ function analyze() {
 
         <p>
             Monthly Cash Flow:
-            <strong>$${cashFlow.toFixed(2)}</strong>
+            <strong>
+                $${cashflow.toFixed(2)}
+            </strong>
         </p>
 
         <p>
             Annual Cash Flow:
-            <strong>$${annualCashFlow.toFixed(2)}</strong>
+            <strong>
+                $${annualCashflow.toFixed(2)}
+            </strong>
         </p>
 
         <p>
-            Cash-on-Cash ROI:
-            <strong>${roi.toFixed(2)}%</strong>
+            Cash On Cash ROI:
+            <strong>
+                ${roi.toFixed(2)}%
+            </strong>
         </p>
 
         <p>
             Cap Rate:
-            <strong>${capRate.toFixed(2)}%</strong>
+            <strong>
+                ${capRate.toFixed(2)}%
+            </strong>
         </p>
 
         <p>
             ${
-                cashFlow > 0
-                    ? "✅ Positive Cash Flow"
-                    : "❌ Negative Cash Flow"
+                cashflow > 0
+                ? "✅ Positive Cash Flow"
+                : "❌ Negative Cash Flow"
             }
         </p>
 
     `;
+
 }
 
 
-// ======================================================
+// ============================================================
 // BRRRR CALCULATOR
-// ======================================================
+// ============================================================
 
 function calculateBRRRR() {
 
     const purchasePrice =
         Number(
-            document.getElementById(
-                "purchasePrice"
-            ).value
-        ) || 0;
+            document.getElementById("purchasePrice").value
+        );
 
     const downPaymentPercent =
         Number(
-            document.getElementById(
-                "downPaymentPercent"
-            ).value
-        ) || 0;
+            document.getElementById("downPaymentPercent").value
+        );
 
     const rehabCost =
         Number(
-            document.getElementById(
-                "rehabCost"
-            ).value
-        ) || 0;
+            document.getElementById("rehabCost").value
+        );
 
     const closingCosts =
         Number(
-            document.getElementById(
-                "closingCosts"
-            ).value
-        ) || 0;
+            document.getElementById("closingCosts").value
+        );
 
     const holdingCosts =
         Number(
-            document.getElementById(
-                "holdingCosts"
-            ).value
-        ) || 0;
+            document.getElementById("holdingCosts").value
+        );
 
     const arv =
         Number(
             document.getElementById("arv").value
-        ) || 0;
+        );
 
     const refiLTV =
         Number(
             document.getElementById("refiLTV").value
-        ) || 0;
+        );
 
     const loanBalance =
         Number(
-            document.getElementById(
-                "loanBalance"
-            ).value
-        ) || 0;
+            document.getElementById("loanBalance").value
+        );
 
     const rent =
         Number(
-            document.getElementById(
-                "monthlyRent"
-            ).value
-        ) || 0;
+            document.getElementById("monthlyRent").value
+        );
 
     const expenses =
         Number(
-            document.getElementById(
-                "monthlyExpenses"
-            ).value
-        ) || 0;
+            document.getElementById("monthlyExpenses").value
+        );
 
 
     const downPayment =
@@ -483,37 +506,42 @@ function calculateBRRRR() {
         expenses;
 
 
+    const annualCashFlow =
+        monthlyCashFlow * 12;
+
+
     const cashOnCash =
         cashLeft > 0
-            ? (
-                (monthlyCashFlow * 12) /
-                cashLeft
-            ) * 100
-            : 0;
+        ? (annualCashFlow / cashLeft) * 100
+        : 0;
 
 
     document.getElementById(
         "cashInvested"
     ).innerText =
-        "$" + cashInvested.toFixed(0);
+        "$" +
+        cashInvested.toFixed(0);
 
 
     document.getElementById(
         "refiLoan"
     ).innerText =
-        "$" + refinanceLoan.toFixed(0);
+        "$" +
+        refinanceLoan.toFixed(0);
 
 
     document.getElementById(
         "cashReturned"
     ).innerText =
-        "$" + cashReturned.toFixed(0);
+        "$" +
+        cashReturned.toFixed(0);
 
 
     document.getElementById(
         "cashLeft"
     ).innerText =
-        "$" + cashLeft.toFixed(0);
+        "$" +
+        cashLeft.toFixed(0);
 
 
     document.getElementById(
@@ -542,14 +570,16 @@ function calculateBRRRR() {
         rating =
             "🔥 Excellent BRRRR Deal";
 
-    } else if (
+    }
+    else if (
         cashLeft <= 25000
     ) {
 
         rating =
             "✅ Good Deal";
 
-    } else {
+    }
+    else {
 
         rating =
             "⚠️ Needs Improvement";
@@ -561,23 +591,31 @@ function calculateBRRRR() {
         "brrrrScore"
     ).innerText =
         rating;
+
 }
 
 
-// ======================================================
+// ============================================================
 // CHECK PRO STATUS
-// ======================================================
+// ============================================================
 
 async function checkProStatus() {
 
-    const session =
-        await getCurrentSession();
+    const {
+        data
+    } =
+        await supabaseClient.auth.getSession();
 
 
-    if (!session) {
+    if (!data.session) {
 
         return false;
+
     }
+
+
+    const user =
+        data.session.user;
 
 
     const {
@@ -585,50 +623,85 @@ async function checkProStatus() {
         error
     } =
         await supabaseClient
-            .from("profiles")
-            .select("is_pro")
-            .eq(
-                "id",
-                session.user.id
-            )
-            .maybeSingle();
+        .from("profiles")
+        .select("is_pro")
+        .eq("id", user.id)
+        .maybeSingle();
 
 
     if (error) {
 
-        console.error(
-            "Pro status error:",
+        console.log(
+            "Profile check:",
             error
         );
 
         return false;
+
     }
 
 
-    return profile?.is_pro === true;
+    if (
+        profile &&
+        profile.is_pro === true
+    ) {
+
+        document.body.classList.add(
+            "pro-user"
+        );
+
+        return true;
+
+    }
+
+
+    return false;
+
 }
 
 
-// ======================================================
-// SAVE DEAL - PRO ONLY
-// ======================================================
+// ============================================================
+// UPGRADE
+// ============================================================
+
+function upgrade() {
+
+    window.location.href =
+        "https://buy.stripe.com/fZu7sE0M50v1cFb1OmfMA00";
+
+}
+
+
+// ============================================================
+// SAVE DEAL
+// ============================================================
 
 async function saveDeal() {
 
-    const session =
-        await getCurrentSession();
+    console.log(
+        "SAVE DEAL CLICKED"
+    );
 
 
-    if (!session) {
+    // Check login
+    const {
+        data
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    if (!data.session) {
 
         alert(
-            "Please login first."
+            "Please log in first."
         );
 
         return;
+
     }
 
 
+    // Check Pro
     const isPro =
         await checkProStatus();
 
@@ -637,9 +710,7 @@ async function saveDeal() {
 
         const upgradeNow =
             confirm(
-                "🔒 Saving deals is a Pro feature.\n\n" +
-                "Upgrade to Pro for $9/month.\n\n" +
-                "Would you like to upgrade?"
+                "Saving deals is a Pro feature.\n\nUpgrade for $9/month?"
             );
 
 
@@ -649,143 +720,168 @@ async function saveDeal() {
 
         }
 
+
         return;
+
     }
 
 
-    const propertyNameInput =
-        document.getElementById(
-            "propertyName"
-        );
+    const user =
+        data.session.user;
 
 
     const propertyName =
-        propertyNameInput.value.trim();
+        document
+        .getElementById("propertyName")
+        .value
+        .trim();
 
 
     if (!propertyName) {
 
         alert(
-            "Please enter a property name."
+            "Enter a property name first."
         );
 
         return;
+
     }
+
+
+    const purchasePrice =
+        Number(
+            document.getElementById(
+                "purchasePrice"
+            ).value
+        );
+
+
+    const rehabCost =
+        Number(
+            document.getElementById(
+                "rehabCost"
+            ).value
+        );
+
+
+    const arv =
+        Number(
+            document.getElementById(
+                "arv"
+            ).value
+        );
+
+
+    const cashLeftText =
+        document
+        .getElementById("cashLeft")
+        .innerText
+        .replace("$", "")
+        .replace(",", "");
+
+
+    const cashFlowText =
+        document
+        .getElementById("cashFlow")
+        .innerText
+        .replace("$", "")
+        .replace("/month", "")
+        .replace(",", "");
+
+
+    const cashOnCashText =
+        document
+        .getElementById("cashOnCash")
+        .innerText
+        .replace("%", "");
 
 
     const deal = {
 
-        user_id:
-            session.user.id,
+        user_id: user.id,
 
         property_name:
             propertyName,
 
         purchase_price:
-            Number(
-                document.getElementById(
-                    "purchasePrice"
-                ).value
-            ) || 0,
+            purchasePrice,
 
         rehab_cost:
-            Number(
-                document.getElementById(
-                    "rehabCost"
-                ).value
-            ) || 0,
+            rehabCost,
 
         arv:
-            Number(
-                document.getElementById(
-                    "arv"
-                ).value
-            ) || 0,
+            arv,
 
         cash_left:
-            Number(
-                document.getElementById(
-                    "cashLeft"
-                ).innerText
-                .replace(/[$,]/g, "")
-            ) || 0,
+            Number(cashLeftText),
 
         monthly_cash_flow:
-            Number(
-                document.getElementById(
-                    "cashFlow"
-                ).innerText
-                .replace(/[$,\/month]/g, "")
-            ) || 0,
+            Number(cashFlowText),
 
         cash_on_cash:
-            Number(
-                document.getElementById(
-                    "cashOnCash"
-                ).innerText
-                .replace("%", "")
-            ) || 0
+            Number(cashOnCashText)
+
     };
+
+
+    console.log(
+        "Saving deal:",
+        deal
+    );
 
 
     const {
         error
     } =
         await supabaseClient
-            .from("deals")
-            .insert([deal]);
+        .from("deals")
+        .insert(deal);
 
 
     if (error) {
 
         console.error(
-            "Save deal error:",
+            "SAVE DEAL ERROR:",
             error
         );
 
         alert(
-            "Error saving deal:\n\n" +
+            "Error saving deal: " +
             error.message
         );
 
         return;
+
     }
 
 
     alert(
         "✅ Deal saved successfully!"
     );
+
 }
 
 
-// ======================================================
-// STRIPE UPGRADE
-// ======================================================
-
-function upgrade() {
-
-    window.location.href =
-        "https://buy.stripe.com/fZu7sE0M50v1cFb1OmfMA00";
-}
-
-
-// ======================================================
-// DOWNLOAD PDF - PRO ONLY
-// ======================================================
+// ============================================================
+// PDF REPORT
+// ============================================================
 
 async function downloadReport() {
 
-    const session =
-        await getCurrentSession();
+    const {
+        data
+    } =
+        await supabaseClient.auth.getSession();
 
 
-    if (!session) {
+    if (!data.session) {
 
         alert(
-            "Please login first."
+            "Please log in first."
         );
 
         return;
+
     }
 
 
@@ -797,9 +893,7 @@ async function downloadReport() {
 
         const upgradeNow =
             confirm(
-                "🔒 PDF reports are a Pro feature.\n\n" +
-                "Upgrade to Pro for $9/month.\n\n" +
-                "Would you like to upgrade?"
+                "Investor PDF Reports are a Pro feature.\n\nUpgrade for $9/month?"
             );
 
 
@@ -809,33 +903,38 @@ async function downloadReport() {
 
         }
 
+
         return;
+
     }
 
 
     generatePDF();
+
 }
 
 
-// ======================================================
+// ============================================================
 // GENERATE PDF
-// ======================================================
+// ============================================================
 
 function generatePDF() {
 
     if (!window.jspdf) {
 
         alert(
-            "PDF system is not loaded."
+            "PDF system is still loading. Try again."
         );
 
         return;
+
     }
 
 
     const {
         jsPDF
-    } = window.jspdf;
+    } =
+        window.jspdf;
 
 
     const doc =
@@ -843,44 +942,30 @@ function generatePDF() {
 
 
     const propertyName =
-        document.getElementById(
-            "propertyName"
-        )?.value ||
+        document
+        .getElementById("propertyName")
+        ?.value ||
         "Rental Property";
 
 
-    const purchasePrice =
-        document.getElementById(
-            "purchasePrice"
-        )?.value ||
+    const price =
+        document
+        .getElementById("price")
+        ?.value ||
         "0";
-
-
-    const arv =
-        document.getElementById(
-            "arv"
-        )?.value ||
-        "0";
-
-
-    const cashLeft =
-        document.getElementById(
-            "cashLeft"
-        )?.innerText ||
-        "$0";
 
 
     const cashFlow =
-        document.getElementById(
-            "cashFlow"
-        )?.innerText ||
-        "$0";
+        document
+        .getElementById("cashFlow")
+        ?.innerText ||
+        "0";
 
 
     const cashOnCash =
-        document.getElementById(
-            "cashOnCash"
-        )?.innerText ||
+        document
+        .getElementById("cashOnCash")
+        ?.innerText ||
         "0%";
 
 
@@ -914,25 +999,9 @@ function generatePDF() {
 
     doc.text(
         "Purchase Price: $" +
-        purchasePrice,
+        price,
         20,
         70
-    );
-
-
-    doc.text(
-        "ARV: $" +
-        arv,
-        20,
-        85
-    );
-
-
-    doc.text(
-        "Cash Left in Deal: " +
-        cashLeft,
-        20,
-        100
     );
 
 
@@ -940,58 +1009,27 @@ function generatePDF() {
         "Monthly Cash Flow: " +
         cashFlow,
         20,
-        115
+        85
     );
 
 
     doc.text(
-        "Cash-on-Cash Return: " +
+        "Cash On Cash Return: " +
         cashOnCash,
         20,
-        130
+        100
     );
 
 
     doc.text(
         "Generated by Rental Analyzer Pro",
         20,
-        155
+        125
     );
 
 
     doc.save(
         "Rental-Analyzer-Pro-Report.pdf"
     );
+
 }
-
-
-// ======================================================
-// AUTH STATE LISTENER
-// ======================================================
-
-supabaseClient.auth.onAuthStateChange(
-    async (event, session) => {
-
-        console.log(
-            "Auth event:",
-            event
-        );
-
-        await updateUserStatus();
-
-    }
-);
-
-
-// ======================================================
-// PAGE STARTUP
-// ======================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
-
-        await updateUserStatus();
-
-    }
-);
