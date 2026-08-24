@@ -11,7 +11,16 @@ const supabaseClient = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
+async function logout() {
+    const { error } = await supabaseClient.auth.signOut();
 
+    if (error) {
+        console.error("Logout error:", error);
+        return;
+    }
+
+    window.location.href = "index.html";
+}
 
 // ===============================
 // RENTAL CALCULATOR
@@ -268,8 +277,28 @@ await supabaseClient.auth.signOut();
 window.location.href="index.html";
 
 }
+async function checkLogin() {
 
+    const {
+        data: { session },
+        error
+    } = await supabaseClient.auth.getSession();
 
+    if (error) {
+        console.error("Session error:", error);
+        return null;
+    }
+
+    if (!session) {
+        console.log("No active session");
+        return null;
+    }
+
+    console.log("Logged in as:", session.user.email);
+
+    return session;
+}
+checkLogin();
 
 // ===============================
 // STRIPE
@@ -391,4 +420,79 @@ doc.save(
 );
 
 
+}
+async function saveDeal() {
+
+    const {
+        data: { session },
+        error: sessionError
+    } = await supabaseClient.auth.getSession();
+
+    if (sessionError) {
+        console.error(sessionError);
+        alert("Unable to check login.");
+        return;
+    }
+
+    if (!session) {
+        alert("Please log in first.");
+        return;
+    }
+
+    const deal = {
+        user_id: session.user.id,
+
+        property_name:
+            document.getElementById("propertyName").value,
+
+        purchase_price:
+            Number(document.getElementById("purchasePrice").value),
+
+        rehab_cost:
+            Number(document.getElementById("rehabCost").value),
+
+        arv:
+            Number(document.getElementById("arv").value),
+
+        cash_left:
+            Number(
+                document
+                .getElementById("cashLeft")
+                .innerText
+                .replace(/[$,]/g, "")
+            ),
+
+        monthly_cash_flow:
+            Number(
+                document
+                .getElementById("cashFlow")
+                .innerText
+                .replace(/[$,\/month]/g, "")
+            ),
+
+        cash_on_cash:
+            Number(
+                document
+                .getElementById("cashOnCash")
+                .innerText
+                .replace("%", "")
+            )
+    };
+
+    console.log("Saving:", deal);
+
+    const { error } = await supabaseClient
+        .from("deals")
+        .insert([deal]);
+
+    if (error) {
+
+        console.error("Save error:", error);
+
+        alert("Error saving deal: " + error.message);
+
+        return;
+    }
+
+    alert("Deal saved successfully!");
 }
